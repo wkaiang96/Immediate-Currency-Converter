@@ -1,0 +1,43 @@
+{
+  "manifest_version": 2,
+  "name": "Immediate Currency Converter",
+  "version": "1.0",
+
+  "description": "Highlight amount on webpage and get converted amount.",
+  
+  "background": {
+        "scripts": [
+            "thirdparty/jquery-3.2.1.js", "thirdparty/money.js", "background.js"
+        ]
+  },
+
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "notifications",
+    "storage",
+    "http://fixer.io/"
+  ],
+
+  "browser_action": {
+    "browser_style" : true,
+    "default_icon": {
+      "19": "icons/curr_converter-19.png",
+      "38": "icons/curr_converter-32.png"
+    },
+    "default_popup": "currencies.html",
+    "default_title": "Immediate Currency Converter"
+  },
+
+  "icons": {
+    "48": "icons/curr_converter-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
