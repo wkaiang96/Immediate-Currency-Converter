@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Guide of using Immediate Currency Converter
 
 ###### When you first install this extensions, it will required you to choose default currency to do the convertion. Without this initialzation. It will not work.
@@ -15,3 +16,7 @@
 ###### The currency rate that I'm getting is from https://www.fixer.io. Visit their site to know about it.
 
 *I know I have written a poor readme, contact me if doubt, yjtoro@hotmail.com*
+=======
+# Immediate-Currency-Converter
+Highlight number on web page and instantly convert to desired currency
+>>>>>>> 8eebc37ffff491097da11a19796334fdddd1f0dd
