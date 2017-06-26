@@ -13,7 +13,7 @@
 
 ###### The jquery file has been included in the extension, in case you would to reproduce it, copy the whole jquery-3.2.1 and make a new file again.
 
-###### The currency rate that I'm getting is from https://www.fixer.io. Visit their site to know about it.
+###### The currency rate that I'm getting is from http://www.fixer.io. Visit their site to know about it.
 
 ###### *I know I have written a poor readme, contact me if doubt, yjtoro@hotmail.com*
 ====================================================
