@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
   "name": "Immediate Currency Converter",
-  "version": "1.0",
+  "version": "1.2",
 
   "description": "Highlight amount on webpage and get converted amount.",
-  
+
   "background": {
         "scripts": [
             "thirdparty/jquery-3.2.1.js", "thirdparty/money.js", "background.js"
@@ -14,8 +14,6 @@
   "permissions": [
     "contextMenus",
     "activeTab",
-    "webRequest",
-    "webRequestBlocking",
     "notifications",
     "storage",
     "http://fixer.io/"
