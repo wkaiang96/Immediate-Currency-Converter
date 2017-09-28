@@ -239,6 +239,20 @@ function checkNewConvertSelection(selection){
       checkNewConvertSelection(convert_curr);
       makeTitle();
   }
+  
+  else if(e.target.id === "b_EUR"){
+      uncheckLastBaseSelection(base_curr);
+      base_curr.name = "EUR";
+      checkNewBaseSelection(base_curr);
+      makeTitle();
+  }
+
+  else if(e.target.id === "c_EUR"){
+      uncheckLastConvertSelection(convert_curr);
+      convert_curr.name = "EUR";
+      checkNewConvertSelection(convert_curr);
+      makeTitle();
+  }
 
   else if(e.target.id === "b_GBP"){
       uncheckLastBaseSelection(base_curr);
