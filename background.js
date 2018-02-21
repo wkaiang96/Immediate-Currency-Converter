@@ -4,9 +4,11 @@ var convert_curr = 'MYR';
 var user_base = "undefined";
 var user_convert = "undefined";
 var title = '';
+
 var dailyData = '';
 //updated field
 var dailyDataArray;
+
 function init(){
   $.getJSON("http://api.fixer.io/latest", storeDailyData);
 }
@@ -24,8 +26,8 @@ var storeDailyData = function(data){
 init();
 
 var makeTitle = function(){
-    let gettingItem = browser.storage.local.get();
-    gettingItem.then(onGot, onError);
+  let gettingItem = browser.storage.local.get();
+  gettingItem.then(onGot, onError);
 }
 
 function onGot(item){
@@ -65,6 +67,39 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
     convert(info.selectionText);
   }
 });
+
+/**
+ *Updates 0.2 to accept 100,000.00 kind of amount.
+ */
+function convert(variable){
+  var amount = variable;
+  if(! isNaN(amount)){
+    user_amount = Number(amount);
+    currency_convert();
+  }else if(amount.includes(',')){
+    var str_amount = amount;
+    while (str_amount.includes(',')) {
+      str_amount = str_amount.replace(',','');
+    }
+    user_amount = Number(str_amount);
+    currency_convert();
+    /**
+     *Update 0.2 end here.
+     */
+  }else{
+    browser.notifications.create({
+      "type": "basic",
+      "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
+      "title": "Ops! Cannot convert this.",
+      "message": "Highlight only numbers to convert, without symbols or characters."
+    });
+  }
+}
+
+function currency_convert() {
+  let get_user_base = browser.storage.local.get();
+  get_user_base.then(onGotConvert, onError);
+}
 
 function onGotConvert(item){
   console.log(item);
@@ -142,38 +177,6 @@ function onGotConvert(item){
 }
 
 
-function currency_convert() {
-  let get_user_base = browser.storage.local.get();
-  get_user_base.then(onGotConvert, onError);
-}
-/**
-*Updates 0.2 to accept 100,000.00 kind of amount.
-*/
-function convert(variable){
-   var amount = variable;
-   if(! isNaN(amount)){
-      user_amount = Number(amount);
-      currency_convert();
-   }else if(amount.includes(',')){
-     var str_amount = amount;
-     while (str_amount.includes(',')) {
-       str_amount = str_amount.replace(',','');
-     }
-     user_amount = Number(str_amount);
-     currency_convert();
-/**
-*Update 0.2 end here.
-*/
-   }else{
-     browser.notifications.create({
-      "type": "basic",
-      "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
-      "title": "Ops! Cannot convert this.",
-      "message": "Highlight only numbers to convert, without symbols or characters."
-    });
-   }
-}
-
 function onGotB(item) {
   //console.log(item);
   console.log(item.base_curr.name);
@@ -191,10 +194,10 @@ function onError(error) {
 }
 
 function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            return false;
-    }
-    //return true;
-    return JSON.stringify(obj) === JSON.stringify({});
+  for(var prop in obj) {
+    if(obj.hasOwnProperty(prop))
+      return false;
+  }
+  //return true;
+  return JSON.stringify(obj) === JSON.stringify({});
 }

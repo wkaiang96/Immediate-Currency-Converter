@@ -2,8 +2,8 @@ var user_base = '';
 var user_convert = '';
 
 var makeTitle = function(){
-    let gettingItem = browser.storage.local.get();
-    gettingItem.then(onGot, onError);    
+  let gettingItem = browser.storage.local.get();
+  gettingItem.then(onGot, onError);    
 }
 
 function onGot(item){
@@ -49,7 +49,7 @@ function onGotC(item){
 
 function isEmptyObject(obj) {
   if (obj.length && obj.length > 0){
-     return false;          
+    return false;          
   }
   if (obj.length === 0){
     return true;        
@@ -57,12 +57,12 @@ function isEmptyObject(obj) {
 }
 
 function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            return false;
-    }
-    //return true;
-    return JSON.stringify(obj) === JSON.stringify({});
+  for(var prop in obj) {
+    if(obj.hasOwnProperty(prop))
+      return false;
+  }
+  //return true;
+  return JSON.stringify(obj) === JSON.stringify({});
 }  
 
 document.addEventListener("click", (e) => {
@@ -80,44 +80,44 @@ document.addEventListener("click", (e) => {
   }
 
   function uncheckLastBaseSelection(item){
-   if(item.name){
-    var last_selection = "b_" + item.name;
-    var lastSelection = document.getElementById(last_selection);
-    lastSelection.style.border = '';
-    lastSelection.style.background = '#fbfbfb';
-    lastSelection.style.color = '#000';
+    if(item.name){
+      var last_selection = "b_" + item.name;
+      var lastSelection = document.getElementById(last_selection);
+      lastSelection.style.border = '';
+      lastSelection.style.background = '#fbfbfb';
+      lastSelection.style.color = '#000';
+    }
   }
-}
 
-function checkNewBaseSelection(selection){
-  var new_selection = "b_" + selection.name;
-  var base_selection = document.getElementById(new_selection);
-  base_selection.style.border = '3px solid green';
-  base_selection.style.backgroundColor ='#15bd8d';
-  base_selection.style.color = '#fff';
-  let result = browser.storage.local.set({base_curr});
-  result.then(null, onError);
-}
-
-function uncheckLastConvertSelection(item){
-   if(item.name){
-    var last_selection = "c_" + item.name;
-    var lastSelection = document.getElementById(last_selection);
-    lastSelection.style.border = '';
-    lastSelection.style.background = '#fbfbfb';
-    lastSelection.style.color = '#000';
+  function checkNewBaseSelection(selection){
+    var new_selection = "b_" + selection.name;
+    var base_selection = document.getElementById(new_selection);
+    base_selection.style.border = '3px solid green';
+    base_selection.style.backgroundColor ='#15bd8d';
+    base_selection.style.color = '#fff';
+    let result = browser.storage.local.set({base_curr});
+    result.then(null, onError);
   }
-}
 
-function checkNewConvertSelection(selection){
-  var new_selection = "c_" + selection.name;
-  var base_selection = document.getElementById(new_selection);
-  base_selection.style.border = '3px solid green';
-  base_selection.style.backgroundColor ='#15bd8d';
-  base_selection.style.color = '#fff';
-  let result = browser.storage.local.set({convert_curr});
-  result.then(null, onError);
-}
+  function uncheckLastConvertSelection(item){
+    if(item.name){
+      var last_selection = "c_" + item.name;
+      var lastSelection = document.getElementById(last_selection);
+      lastSelection.style.border = '';
+      lastSelection.style.background = '#fbfbfb';
+      lastSelection.style.color = '#000';
+    }
+  }
+
+  function checkNewConvertSelection(selection){
+    var new_selection = "c_" + selection.name;
+    var base_selection = document.getElementById(new_selection);
+    base_selection.style.border = '3px solid green';
+    base_selection.style.backgroundColor ='#15bd8d';
+    base_selection.style.color = '#fff';
+    let result = browser.storage.local.set({convert_curr});
+    result.then(null, onError);
+  }
 
   if (e.target.id === "window-update-minimize") {
     getCurrentWindow().then((currentWindow) => {
@@ -129,18 +129,18 @@ function checkNewConvertSelection(selection){
     });
   }
   else if(e.target.id.startsWith("b_")){
-      uncheckLastBaseSelection(base_curr);
-      // extract the part of the id after "b_"
-      base_curr.name = e.target.id.slice(2);
-      checkNewBaseSelection(base_curr);
-      makeTitle();
+    uncheckLastBaseSelection(base_curr);
+    // extract the part of the id after "b_"
+    base_curr.name = e.target.id.slice(2);
+    checkNewBaseSelection(base_curr);
+    makeTitle();
   }
   else if(e.target.id.startsWith("c_")){
-      uncheckLastConvertSelection(convert_curr);
-      // extract the part of the id after "c_"
-      convert_curr.name = e.target.id.slice(2);
-      checkNewConvertSelection(convert_curr);
-      makeTitle();
+    uncheckLastConvertSelection(convert_curr);
+    // extract the part of the id after "c_"
+    convert_curr.name = e.target.id.slice(2);
+    checkNewConvertSelection(convert_curr);
+    makeTitle();
   }
 
   e.preventDefault();
