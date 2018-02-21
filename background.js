@@ -1,8 +1,8 @@
 var user_amount = 0;
 var base_curr = 'USD';
 var convert_curr = 'MYR';
-var user_base = "undefined";
-var user_convert = "undefined";
+var user_base = undefined;
+var user_convert = undefined;
 var title = '';
 
 var dailyData = '';
@@ -68,29 +68,40 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
   }
 });
 
-/**
- *Updates 0.2 to accept 100,000.00 kind of amount.
- */
 function convert(variable){
-  var amount = variable;
-  if(! isNaN(amount)){
+  var amount = variable.trim();
+
+  // two million, ten thousand and a half is 2,010,000.5
+  var common_num_format = /^\d+(,\d+)+(.\d*)?$/; 
+
+  // two million, ten thousand and a half is 2.010.000,5
+  var european_num_format = /^\d+(.\d+){2,}(,\d*)?$/; 
+
+  if(!isNaN(amount)){
     user_amount = Number(amount);
     currency_convert();
-  }else if(amount.includes(',')){
-    var str_amount = amount;
-    while (str_amount.includes(',')) {
-      str_amount = str_amount.replace(',','');
-    }
-    user_amount = Number(str_amount);
+
+  }else if(common_num_format.test(amount)){
+    var all_commas = /,/g;
+    plain_amount = amount.replace(all_commas, '');
+    console.log('Common format amount ' + amount + ' is now: ' + plain_amount);
+    user_amount = Number(plain_amount);
     currency_convert();
-    /**
-     *Update 0.2 end here.
-     */
+
+  }else if(european_num_format.test(amount)){
+    var all_dots = /\./g;
+    plain_amount = amount.replace(all_dots, '');
+    //replace decimal comma with decimal dot that Number understands
+    plain_amount = plain_amount.replace(',', '.');
+    console.log('European format amount ' + amount + ' is now: ' + plain_amount);
+    user_amount = Number(plain_amount);
+    currency_convert();
+
   }else{
     browser.notifications.create({
       "type": "basic",
       "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
-      "title": "Ops! Cannot convert this.",
+      "title": "Oops! Cannot convert this.",
       "message": "Highlight only numbers to convert, without symbols or characters."
     });
   }
