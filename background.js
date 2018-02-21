@@ -4,6 +4,7 @@ var convert_curr = 'MYR';
 var user_base = undefined;
 var user_convert = undefined;
 var title = '';
+var symbol_currency_map = new Object();
 
 var dailyData = '';
 //updated field
@@ -11,6 +12,7 @@ var dailyDataArray;
 
 function init(){
   $.getJSON("http://api.fixer.io/latest", storeDailyData);
+  setSymbolCurrencyMap();
 }
 
 var storeDailyData = function(data){
@@ -70,6 +72,7 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
 
 function convert(variable){
   var amount = variable.trim();
+  
 
   // two million, ten thousand and a half is 2,010,000.5
   var common_num_format = /^\d+(,\d+)+(.\d*)?$/; 
@@ -212,3 +215,42 @@ function isEmpty(obj) {
   //return true;
   return JSON.stringify(obj) === JSON.stringify({});
 }
+
+// Currency symbol info largely taken from https://github.com/xsolla/currency-format/
+function setSymbolCurrencyMap() {
+  symbol_currency_map = {
+      "A$": "AUD",
+      "лв": "BGN",
+      "R$": "BRL",
+      "CA$": "CAD",
+      "SFr": "CHF",
+      "元": "CNY",
+      "Kč": "CZK",
+      // "kr": "DKK", //kr is used for three currencies, not unique enough to use
+      "€": "EUR",
+      "£": "GBP",
+      "HK$": "HKD",
+      "Ft": "HUF",
+      "Rp": "IDR",
+      "₪": "ILS",
+      "₹": "INR",
+	  "Rs": "INR",
+      "¥": "JPY",
+      "₩": "KRW",
+      "Mex$": "MXN",
+      "RM": "MYR",
+      //"kr": "NOK",
+      "NZ$": "NZD",
+      "₱": "PHP",
+      "zł": "PLN",
+      "lei": "RON",
+      "₽": "RUB",
+      //"kr": "SEK",
+      "S$": "SGD",
+      "฿": "THB",
+      "₺": "TRY",
+      "$": "USD",
+      "R": "ZAR"
+  };
+}
+
