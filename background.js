@@ -62,10 +62,10 @@ makeTitle();
 // object constructor
 function Conversion(selection_text) {
   this.selection = selection_text;
-  this.amount = 0;
+  this.amount = undefined;
   this.base_curr = undefined;
   this.convert_curr = undefined;
-  this.converted_amount = 0;
+  this.converted_amount = undefined;
   this.extra_msg_text = '';
 };
 
@@ -160,6 +160,9 @@ Conversion.prototype.get_amount = function () {
     console.log('European format amount ' + amount_str + ' is now: ' + plain_amount);
     this.amount = Number(plain_amount);
 
+  }
+  else {
+    this.amount = NaN;
   }
 }
 
