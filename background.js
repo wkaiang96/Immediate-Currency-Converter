@@ -34,7 +34,7 @@ function onGot(item){
     if(item.base_curr.name && item.convert_curr.name){
       var base_curr = item.base_curr.name;
       var convert_curr = item.convert_curr.name;
-      title = "Convert from "+ base_curr + " " + " to " + " " + convert_curr;
+      title = "Convert to " + convert_curr;
       browser.contextMenus.create({
         id: "log-selection",
         title: title,

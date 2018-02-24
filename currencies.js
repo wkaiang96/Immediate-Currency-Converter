@@ -13,7 +13,7 @@ function onGot(item){
     if(item.base_curr.name && item.convert_curr.name){
       user_base = item.base_curr.name;
       user_convert = item.convert_curr.name;
-      title = "Convert from "+ user_base + " " + " to " + " " + user_convert;
+      title = "Convert to " + user_convert;
       var onUpdatedMenu = browser.contextMenus.update("log-selection",{
         title: title});
       onUpdatedMenu.then(onUpdated, onError);
