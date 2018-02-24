@@ -169,8 +169,8 @@ Conversion.prototype.get_amount = function () {
 Conversion.prototype.currency_symbol_check = function () {
   selection = this.selection.trim();
 
-  text_at_start = /^(\w+)[ .]*\d/;
-  text_at_end   = /\d\.?\s*(\w+)\.?$/;
+  text_at_start = /^(\D+?)[ .]*\d/;
+  text_at_end   = /\d\.?\s*(\D+?)\.?$/;
 
   match         = selection.match(text_at_start);
   if (!match) {
@@ -179,10 +179,12 @@ Conversion.prototype.currency_symbol_check = function () {
 
   if (match) { 
     text = currency_text = match[1].trim();
+    // if the text is one of the symbols in the list like ₹ or €
     if(text in symbol_currency_map) {
       currency_text = symbol_currency_map[text];
     } 
 
+    // if the text is one of the currency abbreviations like CAD or JPY
     if(currency_text in dailyData.rates || currency_text === dailyData.base) {
       // currency marker found, set that value in this
       this.base_curr = currency_text;
