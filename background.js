@@ -83,12 +83,9 @@ Conversion.prototype.start_conversion = function() {
   this.get_amount();
 
   if (this.amount == null || isNaN(this.amount)) {
-    browser.notifications.create({
-      "type": "basic",
-      "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
-      "title": "Oops! Cannot convert this.",
-      "message": "Highlight only numbers to convert, without symbols or characters."
-    });
+    show_browser_notification({
+      "message": "Highlight only numbers to convert, without symbols or characters.",
+      "title":   "Oops! Cannot convert this."});
     return;
   }
 
@@ -211,12 +208,6 @@ Conversion.prototype.finish_conversion = function () {
           this.converted_amount = Math.round(this.converted_amount * 100) / 100;
         }
       }
-      browser.notifications.create({
-        "type": "basic",
-        "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
-        "title": "Immediate Currency Converter",
-        "message": this.base_curr + " " + this.amount + " = " + this.convert_curr + " " + this.converted_amount
-      });
       console.log(convert_rate);
     }
     if(this.convert_curr === "EUR"){
@@ -228,28 +219,28 @@ Conversion.prototype.finish_conversion = function () {
           this.converted_amount = Math.round(this.converted_amount * 100) / 100;
         }
       }
-      browser.notifications.create({
-        "type": "basic",
-        "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
-        "title": "Immediate Currency Converter",
-        "message": this.base_curr + " " + this.amount + " = " + this.convert_curr + " " + this.converted_amount
-      });
     }
   }else{
     if(this.base_curr && this.convert_curr){
       fx.rates = dailyData.rates;
       var rate = fx(this.amount).from(this.base_curr).to(this.convert_curr);
-      console.log(this.base_curr + " " + this.amount + " = " + this.convert_curr + " " + rate.toFixed(2));
-
-      browser.notifications.create({
-        "type": "basic",
-        "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
-        "title": "Immediate Currency Converter",
-        "message": this.base_curr + " " + this.amount + " = " + this.convert_curr + " " + rate.toFixed(2) + 
-          "\n" + this.extra_msg_text
-      });
+      this.converted_amount = rate.toFixed(2);
     }
   }
+  console.log(this);
+  show_browser_notification({
+    "message": this.base_curr + " " + this.amount + " = " + this.convert_curr + " " + this.converted_amount +
+      "\n" + this.extra_msg_text
+  });
+}
+
+function show_browser_notification({message, title = "Immediate Currency Converter"}) {
+  browser.notifications.create({
+    "type": "basic",
+    "iconUrl": browser.extension.getURL("icons/curr_converter-100.png"),
+    "title": title,
+    "message": message
+  });
 }
 
 function onError(error) {
