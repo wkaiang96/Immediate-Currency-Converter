@@ -4,24 +4,102 @@ var dailyData = '';
 //updated fields
 var dailyDataArray;
 var symbol_currency_map;
+var dataHeader = "imm_";
+//sidebar
+var valListLocal;
+var myWindowId;
+var currBody = document.querySelector("body");
 
-function init(){
-  $.getJSON("http://api.fixer.io/latest", storeDailyData);
-  setSymbolCurrencyMap();
+function init(){  
+  var todayDate = getTodayDate();
+  var todayData = JSON.parse(localStorage.getItem(dataHeader + todayDate));  
+  if(todayData == null){  
+    clearStorage();
+    // change another currency provider
+    // $.getJSON("http://data.fixer.io/api/latest?access_key=56fea1865ff2aec49f03f405ebb4a9f5&format=1", function(data){
+    //   storeDailyData(data)
+    // });
+    retrieveDailyRate(); 
+    setSymbolCurrencyMap();
+  }else{
+    storeDailyData(todayData);
+    setSymbolCurrencyMap();
+  }
+}
+
+function retrieveDailyRate(){
+  var rateObj = {
+    success : true,
+    timestamp : Date.now(),
+    date : '',
+    base : 'EUR',
+    rates : {}
+  };
+  var xhttp = new XMLHttpRequest();          
+  //changed endpoint to retrieve currency rates
+  xhttp.open("GET", "http://immcurr.appec.work/v1/exchgrate", false);
+  xhttp.setRequestHeader("Content-Type", "text/xml");
+  xhttp.send(null);  
+  var doc = xhttp.responseXML;       
+  var cubeTag = doc.getElementsByTagName("Cube");
+  var dateData = cubeTag[1].getAttribute('time');
+  var rateArray = [];    
+  for (var i = 2; i < cubeTag.length; i++) {      
+    rateObj.rates[cubeTag[i].getAttribute('currency')] = cubeTag[i].getAttribute('rate');            
+  }
+  rateObj.date = dateData;    
+  //console.log(JSON.stringify(rateObj));
+  storeDailyData(rateObj);
 }
 
 var storeDailyData = function(data){
   dailyData = data;
-  console.log(JSON.stringify(data));
+  var todayDate = getTodayDate();    
+  if(localStorage.key(dataHeader + todayDate) == null){
+    localStorage.setItem(dataHeader + todayDate, JSON.stringify(dailyData));
+  }
+  //console.log(JSON.stringify(data));
   var obj = dailyData.rates;
   var result = Object.keys(obj).map(function(e) {
     return [(e), obj[e]];
   });
-  dailyDataArray = result;
+  dailyDataArray = result;  
 }
 
 init();
 
+function clearStorage(){
+  var arr = []; // Array to hold the keys
+  // Iterate over localStorage and insert the keys that meet the condition into arr
+  for (var i = 0; i < localStorage.length; i++){
+    if (localStorage.key(i).substring(0,4) == 'imm_') {
+        arr.push(localStorage.key(i));
+    }
+  }
+
+  // Iterate over arr and remove the items by key
+  for (var i = 0; i < arr.length; i++) {
+    localStorage.removeItem(arr[i]);
+  }    
+}
+
+function getTodayDate(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {
+      dd = '0'+dd
+  } 
+
+  if(mm<10) {
+      mm = '0'+mm
+  } 
+
+  today = mm + dd + yyyy;
+  return today;
+}
 var makeTitle = function(){
   let gettingItem = browser.storage.local.get();
   gettingItem.then(onGot, onError);
@@ -34,7 +112,9 @@ function onGot(item){
     if(item.base_curr.name && item.convert_curr.name){
       var base_curr = item.base_curr.name;
       var convert_curr = item.convert_curr.name;
-      title = "Convert to " + convert_curr;
+      valListLocal = item.valListLocal;
+
+      title = "Convert from " + base_curr + " to " + convert_curr;
       browser.contextMenus.create({
         id: "log-selection",
         title: title,
@@ -210,7 +290,8 @@ Conversion.prototype.finish_conversion = function () {
           this.converted_amount = Math.round(this.converted_amount * 100) / 100;
         }
       }
-      console.log(convert_rate);
+      onAddVal(this.base_curr, this.convert_curr, this.user_amount, this.converted_amount.toFixed(2));
+      console.log(convert_rate);      
     }
     if(this.convert_curr === "EUR"){
       var convert_rate;
@@ -221,12 +302,14 @@ Conversion.prototype.finish_conversion = function () {
           this.converted_amount = Math.round(this.converted_amount * 100) / 100;
         }
       }
+      onAddVal(this.base_curr, this.convert_curr, this.user_amount, this.converted_amount.toFixed(2));      
     }
   }else{
     if(this.base_curr && this.convert_curr){
       fx.rates = dailyData.rates;
       var rate = fx(this.amount).from(this.base_curr).to(this.convert_curr);
       this.converted_amount = rate.toFixed(2);
+      onAddVal(this.base_curr, this.convert_curr, this.user_amount, rate.toFixed(2));
     }
   }
   console.log(this);
@@ -296,3 +379,49 @@ function setSymbolCurrencyMap() {
   };
 }
 
+function onAddVal(base_curr, convert_curr, base_val, convert_val){
+  if(valListLocal !== undefined){
+    if(valListLocal.length > 10){
+      valListLocal.splice(0,1);
+    }
+  }else{
+    valListLocal = [];
+  }
+  valListLocal.push({"base_curr": base_curr, "convert_curr": convert_curr, "base_val": base_val, "convert_val": convert_val});
+  onSaveVal(valListLocal);
+}
+
+function onSaveVal(c_val){
+  if(valListLocal !== undefined){
+    if(valListLocal.length > 0){
+      let removeVal =  browser.storage.local.remove("valListLocal");
+      removeVal.then(onRemoved, onError);
+    }
+  }
+  valListLocal = c_val;
+  let storingVal = browser.storage.local.set({valListLocal});
+  storingVal.then(null, onError);
+
+  var sending = browser.runtime.sendMessage("update");
+  
+}
+
+function onRemoved() {
+  console.log("OK");
+}
+
+function onGotB(item) {
+  //console.log(item);
+  console.log(item.base_curr.name);
+  user_base = item.base_curr.name;
+}
+
+function onGotC(item) {
+  //console.log(item);
+  console.log(item.convert_curr.name);
+  user_convert = item.convert_curr.name;
+}
+
+function onError(error) {
+  console.log(`Error: ${error}`);
+}

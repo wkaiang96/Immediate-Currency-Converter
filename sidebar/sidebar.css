@@ -1,0 +1,143 @@
+html{
+    padding: 5px;
+}
+
+.primary{
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    overflow: hidden;
+    color: #ffffff;
+    display: inline-block;
+    background: #0060df;
+    border-radius: 2px;
+    height: 24px;
+    padding: 0px 8px 0px 8px;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.default{
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    overflow: hidden;
+    display: inline-block;
+    color: #0c0c0d;
+    background: #e1e1e2;
+    border-radius: 2px;
+    height: 24px;
+    padding: 0px 8px 0px 8px;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.primary:hover{
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    color: #ffffff;
+    background: #003eaa;
+    border-radius: 2px;
+    height: 24px;
+    padding: 0px 8px 0px 8px;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.default:hover{
+    position: relative;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    color: #0c0c0d;
+    background: #c9c9ca;
+    border-radius: 2px;
+    height: 24px;
+    padding: 0px 8px 0px 8px;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.primary:after {
+    content: "";
+    background: #002275;
+    display: block;
+    position: absolute;
+    padding-top: 100%;
+    padding-left: 150%;
+    margin-left: -20px!important;
+    margin-top: -20%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.primary:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+.default:after {
+    content: "";
+    background: #b1b1b1;
+    display: block;
+    position: absolute;
+    padding-top: 100%;
+    padding-left: 150%;
+    margin-left: -20px!important;
+    margin-top: -20%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.default:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+.icon-primary{
+    height: 32px;    
+    color: #ffffff;
+    background: #0060df;
+    border-radius: 2px;
+    height: 24px;
+    padding: 8px 8px 8px 8px;
+    font-size: 16px;
+    font-weight: 400;
+    width: 32px;
+}
+
+.icon-default{
+    height: 32px;    
+    color: #0c0c0d;
+    background: #e1e1e2;
+    border-radius: 2px;
+    height: 24px;
+    padding: 8px 8px 8px 8px;
+    font-size: 16px;
+    font-weight: 400;
+    width: 32px;
+}
+
+.float-right{
+    float: right;
+}
+
+input:focus{
+    outline: none;
+}
