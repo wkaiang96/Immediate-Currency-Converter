@@ -14,9 +14,13 @@ This plugin required jquery to work. The jquery version I'm using is 3.2.1 (non-
 
 The jquery file has been included in the extension, in case you would to reproduce it, copy the whole jquery-3.2.1 and make a new file again.
 
-The currency rate that I'm getting is from https://www.fixer.io. Visit their site to know about it.
+~~The currency rate that I'm getting is from https://www.fixer.io. Visit their site to know about it.~~
 
-(*I know I have written a poor readme, contact me if doubt, yjtoro@hotmail.com*)
+The currency rate is provider by European Central Bank (https://www.ecb.europa.eu), due to CORS issue, I've self host a server to retrieve the rates through that. You can check on my other project, https://github.com/YJChan/RatesConverter, endpoint is (http://immcurr.appec.work/v1/exchgrate).
+
+Future planning
+-----------------
+one application that store historical currency rate and live rates? Hmm... still considering this.
 
 ## Changelog
 
