@@ -28,30 +28,36 @@ function init(){
 }
 
 function retrieveDailyRate(){
-  var rateObj = {
-    success : true,
-    timestamp : Date.now(),
-    date : '',
-    base : 'EUR',
-    rates : {}
-  };
-  var xhttp = new XMLHttpRequest();          
-  //changed endpoint to retrieve currency rates
-  xhttp.open("GET", "http://immcurr.appec.work/v1/exchgrate", false);
-  xhttp.setRequestHeader("Content-Type", "text/xml");
-  xhttp.send(null);  
-  var doc = xhttp.responseXML;       
-  var cubeTag = doc.getElementsByTagName("Cube");
-  var dateData = cubeTag[1].getAttribute('time');
-  var rateArray = [];    
-  for (var i = 2; i < cubeTag.length; i++) {      
-    rateObj.rates[cubeTag[i].getAttribute('currency')] = cubeTag[i].getAttribute('rate');            
+  try{
+    var rateObj = {
+      success : true,
+      timestamp : Date.now(),
+      date : '',
+      base : 'EUR',
+      rates : {}
+    };
+    var xhttp = new XMLHttpRequest();          
+    //changed endpoint to retrieve currency rates
+    xhttp.open("GET", "http://immcurr.appec.work/v1/exchgrat", false);
+    xhttp.setRequestHeader("Content-Type", "text/xml");
+    xhttp.send(null);  
+    var doc = xhttp.responseXML;       
+    var cubeTag = doc.getElementsByTagName("Cube");
+    var dateData = cubeTag[1].getAttribute('time');
+    var rateArray = [];    
+    for (var i = 2; i < cubeTag.length; i++) {
+      rateObj.rates[cubeTag[i].getAttribute('currency')] = cubeTag[i].getAttribute('rate');            
+    }
+    rateObj.date = dateData;    
+    //console.log(JSON.stringify(rateObj));
+    storeDailyData(rateObj);
+  } catch (e) {
+    show_browser_notification({
+      "message": "Error occured, please contact the developer by yjtoro@hotmail.com",
+      "title":   "Oops! You hit an unexpected error."});
   }
-  rateObj.date = dateData;    
-  //console.log(JSON.stringify(rateObj));
-  storeDailyData(rateObj);
 }
-
+  
 var storeDailyData = function(data){
   dailyData = data;
   var todayDate = getTodayDate();    
