@@ -1,7 +1,7 @@
 
 html, body {
-  width: 260px;
-  font-family: Courier New, Courier, monospace;
+  /* width: 540px; */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a {
@@ -10,9 +10,169 @@ a {
 }
 
 button{
-  width:40px;
+  width: 38px;
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 2px 1px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: default;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 11.5px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-mini {
+  padding: 2px 6px;
+}
+
+
+.btn-default {
+  color: #333;
+  border-top-color: #c2c0c2;
+  border-right-color: #c2c0c2;
+  border-bottom-color: #a19fa1;
+  border-left-color: #c2c0c2;
+  background-color: #fcfcfc;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fcfcfc), color-stop(100%, #f1f1f1));
+  background-image: -webkit-linear-gradient(top, #fcfcfc 0%, #f1f1f1 100%);
+  background-image: linear-gradient(to bottom, #fcfcfc 0%, #f1f1f1 100%);
+}
+.btn-default:active {
+  background-color: #ddd;
+  background-image: none;
+}
+
+.btn-primary,
+.btn-positive,
+.btn-negative,
+.btn-warning {
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  border-color: #388df8;
+  border-bottom-color: #0866dc;
+  background-color: #6eb4f7;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6eb4f7), color-stop(100%, #1a82fb));
+  background-image: -webkit-linear-gradient(top, #6eb4f7 0%, #1a82fb 100%);
+  background-image: linear-gradient(to bottom, #6eb4f7 0%, #1a82fb 100%);
+}
+.btn-primary:active {
+  background-color: #3e9bf4;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3e9bf4), color-stop(100%, #0469de));
+  background-image: -webkit-linear-gradient(top, #3e9bf4 0%, #0469de 100%);
+  background-image: linear-gradient(to bottom, #3e9bf4 0%, #0469de 100%);
+}
+
+.btn-positive {
+  border-color: #29a03b;
+  border-bottom-color: #248b34;
+  background-color: #5bd46d;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5bd46d), color-stop(100%, #29a03b));
+  background-image: -webkit-linear-gradient(top, #5bd46d 0%, #29a03b 100%);
+  background-image: linear-gradient(to bottom, #5bd46d 0%, #29a03b 100%);
+}
+
+.btn-positive:active {
+  background-color: #34c84a;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #34c84a), color-stop(100%, #248b34));
+  background-image: -webkit-linear-gradient(top, #34c84a 0%, #248b34 100%);
+  background-image: linear-gradient(to bottom, #34c84a 0%, #248b34 100%);
+}
+
+.btn-default {
+  color: #333;
+  border-top-color: #c2c0c2;
+  border-right-color: #c2c0c2;
+  border-bottom-color: #a19fa1;
+  border-left-color: #c2c0c2;
+  background-color: #fcfcfc;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fcfcfc), color-stop(100%, #f1f1f1));
+  background-image: -webkit-linear-gradient(top, #fcfcfc 0%, #f1f1f1 100%);
+  background-image: linear-gradient(to bottom, #fcfcfc 0%, #f1f1f1 100%);
+}
+.btn-default:active {
+  background-color: #ddd;
+  background-image: none;
 }
 
 .panel {
   margin: 5px;
+  width: 240px;
+  height: 440px;
+  display: flex;
+}
+
+.panel-section {
+  display: inline-block;
+  width: 280px;
+  padding:5px;
+}
+
+.form-control {
+  display: inline-block;
+  width: 92%;
+  min-height: 22px;
+  padding: 5px 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #6db3fd;
+  box-shadow: 1px 1px 0 #6db3fd, -1px -1px 0 #6db3fd, -1px 1px 0 #6db3fd, 1px -1px 0 #6db3fd;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  line-height: normal;
+}
+
+.radio,
+.checkbox {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.radio label,
+.checkbox label {
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-left: 20px;
+  margin-top: 4px;
+}
+
+.checkbox-panel {
+  width: 100%;
+  margin: 10px;
+  clear:both;
+  overflow:hidden;
+}
+
+.checkbox-label {
+  width: 100%;
+  display: block;
+  height: 20px;
+  float: right;
 }

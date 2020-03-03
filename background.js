@@ -38,7 +38,7 @@ function retrieveDailyRate(){
     };
     var xhttp = new XMLHttpRequest();          
     //changed endpoint to retrieve currency rates
-    xhttp.open("GET", "http://immcurr.appec.work/v1/exchgrat", false);
+    xhttp.open("GET", "http://immcurr.appec.work/v1/exchgrate", false);
     xhttp.setRequestHeader("Content-Type", "text/xml");
     xhttp.send(null);  
     var doc = xhttp.responseXML;       
