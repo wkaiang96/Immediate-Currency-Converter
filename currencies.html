@@ -7,82 +7,141 @@
   </head>
 
   <body>
-    <div class="panel">
-      <div class="panel-section panel-section-header">
-        <div class="text-section-header">Base Currency</div>
+    <div style="display: flex;">
+      <div class="checkbox-panel" style="justify-content: space-between;">
+        <label for="advanceChk" class="checkbox-label" id="checkbox_label">
+          <input type="checkbox" name="advanceChk" id="advanceChk">
+          More Currency
+        </label>
       </div>
-      <button href="#" id="b_AUD" title="Australia">AUD</button>
-      <button href="#" id="b_BGN" title="Bulgaria">BGN</button>
-      <button href="#" id="b_BRL" title="Brazil">BRL</button>
-      <button href="#" id="b_CAD" title="Canada">CAD</button>
-      <button href="#" id="b_CHF" title="Swiss Franc">CHF</button>
-      <button href="#" id="b_CNY" title="China">CNY</button>
-      <button href="#" id="b_CZK" title="Czech Republic">CZK</button>
-      <button href="#" id="b_DKK" title="Denmark">DKK</button>
-      <button href="#" id="b_EUR" title="Europe">EUR</button>
-      <button href="#" id="b_GBP" title="United Kingdom">GBP</button>
-      <button href="#" id="b_HKD" title="Hong Kong">HKD</button>
-      <button href="#" id="b_HUF" title="Hungary">HUF</button>
-      <button href="#" id="b_IDR" title="Indonesia">IDR</button>
-      <button href="#" id="b_ILS" title="Israel">ILS</button>
-      <button href="#" id="b_INR" title="India">INR</button>
-      <button href="#" id="b_JPY" title="Japan">JPY</button>
-      <button href="#" id="b_KRW" title="South Korea">KRW</button>
-      <button href="#" id="b_MXN" title="Mexico">MXN</button>
-      <button href="#" id="b_MYR" title="Malaysia">MYR</button>
-      <button href="#" id="b_NOK" title="Norway">NOK</button>
-      <button href="#" id="b_NZD" title="New Zealand">NZD</button>
-      <button href="#" id="b_PHP" title="Philippines">PHP</button>
-      <button href="#" id="b_PLN" title="Poland">PLN</button>
-      <button href="#" id="b_RON" title="Romania">RON</button>
-      <button href="#" id="b_RUB" title="Russia">RUB</button>
-      <button href="#" id="b_SEK" title="Sweden">SEK</button>
-      <button href="#" id="b_SGD" title="Singapore">SGD</button>
-      <button href="#" id="b_THB" title="Thailand">THB</button>
-      <button href="#" id="b_TRY" title="Turkey">TRY</button>
-      <button href="#" id="b_USD" title="United States of America">USD</button>
-      <button href="#" id="b_ZAR" title="South Africa">ZAR</button>
-
-      <div class="panel-section-separator"></div>
-      <div class="panel-section panel-section-header">
-        <div class="text-section-header">Convert To</div>
+      <div class="info-panel" id="info">
+        <span class="info-text" id="binfo">GUIDE</span>
       </div>
-      <button href="#" id="c_AUD" title="Australia">AUD</button>
-      <button href="#" id="c_BGN" title="Bulgaria">BGN</button>
-      <button href="#" id="c_BRL" title="Brazil">BRL</button>
-      <button href="#" id="c_CAD" title="Canada">CAD</button>
-      <button href="#" id="c_CHF" title="Swiss Franc">CHF</button>
-      <button href="#" id="c_CNY" title="China">CNY</button>
-      <button href="#" id="c_CZK" title="Czech Republic">CZK</button>
-      <button href="#" id="c_DKK" title="Denmark">DKK</button>
-      <button href="#" id="c_EUR" title="Europe">EUR</button>
-      <button href="#" id="c_GBP" title="United Kingdom">GBP</button>
-      <button href="#" id="c_HKD" title="Hong Kong">HKD</button>
-      <button href="#" id="c_HUF" title="Hungary">HUF</button>
-      <button href="#" id="c_IDR" title="Indonesia">IDR</button>
-      <button href="#" id="c_ILS" title="Israel">ILS</button>
-      <button href="#" id="c_INR" title="India">INR</button>
-      <button href="#" id="c_JPY" title="Japan">JPY</button>
-      <button href="#" id="c_KRW" title="South Korea">KRW</button>
-      <button href="#" id="c_MXN" title="Mexico">MXN</button>
-      <button href="#" id="c_MYR" title="Malaysia">MYR</button>
-      <button href="#" id="c_NOK" title="Norway">NOK</button>
-      <button href="#" id="c_NZD" title="New Zealand">NZD</button>
-      <button href="#" id="c_PHP" title="Philippines">PHP</button>
-      <button href="#" id="c_PLN" title="Poland">PLN</button>
-      <button href="#" id="c_RON" title="Romania">RON</button>
-      <button href="#" id="c_RUB" title="Russia">RUB</button>
-      <button href="#" id="c_SEK" title="Sweden">SEK</button>
-      <button href="#" id="c_SGD" title="Singapore">SGD</button>
-      <button href="#" id="c_THB" title="Thailand">THB</button>
-      <button href="#" id="c_TRY" title="Turkey">TRY</button>
-      <button href="#" id="c_USD" title="United States of America">USD</button>
-      <button href="#" id="c_ZAR" title="South Africa">ZAR</button>
-
-      <div class="panel-section-separator"></div>
     </div>
-  <script src="./thirdparty/jquery-3.2.1.js"></script>
+    <div class="panel guide" id="guide" style="display: none;">
+      <b>
+        How to use this extension
+      </b>
+      <ol>
+        <li>
+          Select your base currency and currency you want to convert.
+        </li>
+        <li>
+          Select(Highlight) any number on your web page, then right click for context menu.
+        </li>
+        <li>
+          Select Convert From X to X from context menu. a converted value will display to you in notification.
+        </li>
+      </ol>
+      <b>
+        For more feature
+      </b>
+      <ol>
+        <li>
+          Click on "show side bar" or open side bar with "<b>Ctrl + Shift + Y (Windows or Linux)</b> / <b>Cmd + Shift + Y (Mac)</b>"
+        </li>
+        <li>
+          Select <b>Immediate Currency Converter</b> from sidebar.
+        </li>
+        <li>
+          You can copy and view your conversion history and convert 1 currency to all available currency!
+        </li>
+      </ol>
+      <br>
+      <p>
+        Thank you for downloading this extension! 
+        <br>I hope you find it useful. 
+      </p>
+    </div>
+    <div class="panel" id="panel">
+      <div class="panel-section" id="panel-section-base">
+        <div class="text-section-header">Base Currency <span id="base_curr"></span></div>
+        <div id="defaultBase">
+          <button id="b_AUD" class="btn-mini btn-default" title="Australia">AUD</button>
+          <button id="b_BGN" class="btn-mini btn-default" title="Bulgaria">BGN</button>
+          <button id="b_BRL" class="btn-mini btn-default" title="Brazil">BRL</button>
+          <button id="b_CAD" class="btn-mini btn-default" title="Canada">CAD</button>
+          <button id="b_CHF" class="btn-mini btn-default" title="Swiss Franc">CHF</button>
+          <button id="b_CNY" class="btn-mini btn-default" title="China">CNY</button>
+          <button id="b_CZK" class="btn-mini btn-default" title="Czech Republic">CZK</button>
+          <button id="b_DKK" class="btn-mini btn-default" title="Denmark">DKK</button>
+          <button id="b_EUR" class="btn-mini btn-default" title="Europe">EUR</button>
+          <button id="b_EGP" class="btn-mini btn-default" title="Europe">EGP</button>
+          <button id="b_GBP" class="btn-mini btn-default" title="United Kingdom">GBP</button>
+          <button id="b_HKD" class="btn-mini btn-default" title="Hong Kong">HKD</button>
+          <button id="b_HUF" class="btn-mini btn-default" title="Hungary">HUF</button>
+          <button id="b_IDR" class="btn-mini btn-default" title="Indonesia">IDR</button>
+          <button id="b_ILS" class="btn-mini btn-default" title="Israel">ILS</button>
+          <button id="b_INR" class="btn-mini btn-default" title="India">INR</button>
+          <button id="b_JPY" class="btn-mini btn-default" title="Japan">JPY</button>
+          <button id="b_KRW" class="btn-mini btn-default" title="South Korea">KRW</button>
+          <button id="b_MXN" class="btn-mini btn-default" title="Mexico">MXN</button>
+          <button id="b_MYR" class="btn-mini btn-default" title="Malaysia">MYR</button>
+          <button id="b_NOK" class="btn-mini btn-default" title="Norway">NOK</button>
+          <button id="b_NZD" class="btn-mini btn-default" title="New Zealand">NZD</button>
+          <button id="b_PHP" class="btn-mini btn-default" title="Philippines">PHP</button>
+          <button id="b_PKR" class="btn-mini btn-default" title="Philippines">PKR</button>
+          <button id="b_PLN" class="btn-mini btn-default" title="Poland">PLN</button>
+          <button id="b_RON" class="btn-mini btn-default" title="Romania">RON</button>
+          <button id="b_RUB" class="btn-mini btn-default" title="Russia">RUB</button>
+          <button id="b_SEK" class="btn-mini btn-default" title="Sweden">SEK</button>
+          <button id="b_SGD" class="btn-mini btn-default" title="Singapore">SGD</button>
+          <button id="b_THB" class="btn-mini btn-default" title="Thailand">THB</button>
+          <button id="b_TRY" class="btn-mini btn-default" title="Turkey">TRY</button>
+          <button id="b_USD" class="btn-mini btn-default" title="United States of America">USD</button>
+          <button id="b_ZAR" class="btn-mini btn-default" title="South Africa">ZAR</button>
+        </div>
+        <input id="bin_search" style="display: none;" class="form-control">
+        <span id="base_search_result"></span>
+        <div id="advanceBase">
+        </div>
+      </div>
+      <!--<div class="panel-section-separator"></div> -->
+      <div class="panel-section" id="panel-section-convert">
+        <div class="text-section-header">Convert To <span id="convert_curr"></span></div>
+        <div id="defaultConvert">
+          <button id="c_AUD" class="btn-mini btn-default" title="Australia">AUD</button>
+          <button id="c_BGN" class="btn-mini btn-default" title="Bulgaria">BGN</button>
+          <button id="c_BRL" class="btn-mini btn-default" title="Brazil">BRL</button>
+          <button id="c_CAD" class="btn-mini btn-default" title="Canada">CAD</button>
+          <button id="c_CHF" class="btn-mini btn-default" title="Swiss Franc">CHF</button>
+          <button id="c_CNY" class="btn-mini btn-default" title="China">CNY</button>
+          <button id="c_CZK" class="btn-mini btn-default" title="Czech Republic">CZK</button>
+          <button id="c_DKK" class="btn-mini btn-default" title="Denmark">DKK</button>
+          <button id="c_EUR" class="btn-mini btn-default" title="Europe">EUR</button>
+          <button id="c_EGP" class="btn-mini btn-default" title="Europe">EGP</button>
+          <button id="c_GBP" class="btn-mini btn-default" title="United Kingdom">GBP</button>
+          <button id="c_HKD" class="btn-mini btn-default" title="Hong Kong">HKD</button>
+          <button id="c_HUF" class="btn-mini btn-default" title="Hungary">HUF</button>
+          <button id="c_IDR" class="btn-mini btn-default" title="Indonesia">IDR</button>
+          <button id="c_ILS" class="btn-mini btn-default" title="Israel">ILS</button>
+          <button id="c_INR" class="btn-mini btn-default" title="India">INR</button>
+          <button id="c_JPY" class="btn-mini btn-default" title="Japan">JPY</button>
+          <button id="c_KRW" class="btn-mini btn-default" title="South Korea">KRW</button>
+          <button id="c_MXN" class="btn-mini btn-default" title="Mexico">MXN</button>
+          <button id="c_MYR" class="btn-mini btn-default" title="Malaysia">MYR</button>
+          <button id="c_NOK" class="btn-mini btn-default" title="Norway">NOK</button>
+          <button id="c_NZD" class="btn-mini btn-default" title="New Zealand">NZD</button>
+          <button id="c_PHP" class="btn-mini btn-default" title="Philippines">PHP</button>
+          <button id="c_PKR" class="btn-mini btn-default" title="Philippines">PKR</button>
+          <button id="c_PLN" class="btn-mini btn-default" title="Poland">PLN</button>
+          <button id="c_RON" class="btn-mini btn-default" title="Romania">RON</button>
+          <button id="c_RUB" class="btn-mini btn-default" title="Russia">RUB</button>
+          <button id="c_SEK" class="btn-mini btn-default" title="Sweden">SEK</button>
+          <button id="c_SGD" class="btn-mini btn-default" title="Singapore">SGD</button>
+          <button id="c_THB" class="btn-mini btn-default" title="Thailand">THB</button>
+          <button id="c_TRY" class="btn-mini btn-default" title="Turkey">TRY</button>
+          <button id="c_USD" class="btn-mini btn-default" title="United States of America">USD</button>
+          <button id="c_ZAR" class="btn-mini btn-default" title="South Africa">ZAR</button>
+        </div>
+        <input id="cin_search" style="display: none;" class="form-control">
+        <!-- <span id="base_search_result"></span> -->
+        <div id="advanceConvert">
+        </div>
+      </div>
+      <!--<div class="panel-section-separator"></div> -->
+    </div>
+  <!--<script src="./thirdparty/jquery-3.2.1.js"></script>-->
   <script src="currencies.js"></script>
 </body>
-
 </html>

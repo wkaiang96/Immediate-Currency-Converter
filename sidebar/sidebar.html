@@ -6,8 +6,24 @@
         <link rel="stylesheet" href="sidebar.css"/>
     </head>
     <body>
-        <p style="text-decoration:underline">Recent converted value</p>
-        <div id="content"><span>$100.00</span><button class="default float-right">Click Me</button></div>
+        <div style="display: block; width: 100%; min-height:350px; ">
+            <p style="text-decoration:underline">Recent converted value</p>
+            <div id="content"><span>$100.00</span><button class="btn-default float-right">Click Me</button></div>
+        </div>
+        <div style="display: block; width: 100%;">
+            <div class="sticky">
+                <p style="text-decoration:underline">List of currencies</p>
+                <div id="currency-selection" style="top: 25px;" class="currency-row">
+                    <span class="amount-label">Base Currency</span>
+                    <select class="currency-selection" id="selection"></select>
+                    <input class="amount-input" type="number" id="amount" value="0">
+                </div>
+            </div>
+            <div id="currencies">
+
+            </div>
+        </div>
     </body>
+    <script src="../thirdparty/money.js"></script>
     <script src="sidebar.js"></script>
 </html>
