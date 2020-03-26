@@ -25,7 +25,7 @@ function init() {
 }
 
 function retrieveDailyRate() {
-  fetch("http://localhost:8888/v1/daily-rates", {
+  fetch("https://currency.appifact.com/api/daily-rates", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

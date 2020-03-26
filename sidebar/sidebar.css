@@ -216,3 +216,7 @@ input:focus{
     padding: 5px;
     border: 1px solid #ddd;
 }
+
+.helper-text {
+    color: #ccc;
+}

@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Immediate Currency Converter",
   "version": "1.5.5",
 
@@ -19,7 +19,7 @@
     "storage",
     "tabs",
     "<all_urls>",
-    "http://immcurr.appec.work/v1/daily-rates"
+    "https://currency.appifact.com/"
   ],
 
   "browser_action": {
