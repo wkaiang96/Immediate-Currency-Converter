@@ -1,6 +1,7 @@
 var user_base = '';
 var user_convert = '';
 var advance = false;
+var convertCurrency= [];
 
 document.addEventListener("click", function(e) {
   console.log('click');
@@ -83,7 +84,16 @@ document.addEventListener("click", function(e) {
     uncheckLastConvertSelection(user_convert);
     // extract the part of the id after "c_"
     convert_curr.name = e.target.id.slice(2);
-    // console.log('convert curr selected', convert_curr);
+     //console.log('convert curr selected', convert_curr);
+    if (convertCurrency.includes("c_"+convert_curr.name)){
+      var num = convertCurrency.indexOf("c_"+convert_curr.name);
+      convertCurrency.splice(num, 1);
+      console.log(convertCurrency);
+    }
+    else if (!convertCurrency.includes("c_"+convert_curr.name)){
+      convertCurrency.push("c_"+convert_curr.name);
+      console.log(convertCurrency);
+    }
     checkNewConvertSelection(convert_curr);
     makeTitle();
   } 
