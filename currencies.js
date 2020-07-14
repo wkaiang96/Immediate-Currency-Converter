@@ -47,7 +47,7 @@ document.addEventListener("click", function(e) {
     //var n = Currency.indexOf(i);
     //Currency.splice(n, 1);
     console.log("Hi"+Currency);
-    document.getElementById('convert_curr').innerText = Currency.toString();
+    document.getElementById('convert_curr').innerText = getAllCurrency();
     document.getElementById(item).classList.remove('btn-positive');
     document.getElementById(item).classList.add('btn-default');
     // for (const b of btns) {
@@ -64,11 +64,12 @@ document.addEventListener("click", function(e) {
     base_selection.classList.remove('btn-default');
     base_selection.classList.add('btn-positive');
 
-    let result = browser.storage.local.set({convert_curr});
+    let result = browser.storage.local.set({Currency});
     result.then(function() {
-      document.getElementById('convert_curr').innerText = Currency.toString();
+      document.getElementById('convert_curr').innerText = getAllCurrency();
     }, onError);
   }
+
 
   if (e.target.id === "browser-update-minimize") {
     getCurrentbrowser().then((currentbrowser) => {
@@ -104,7 +105,7 @@ document.addEventListener("click", function(e) {
     }
     else if (!convertCurrency.includes("c_"+convert_curr.name)){
       convertCurrency.push("c_"+convert_curr.name);
-      Currency.push(convert_curr.name);
+      Currency.push(convert_curr);
       //console.log(convertCurrency);
       //console.log(Currency);
       checkNewConvertSelection(convert_curr);
@@ -138,6 +139,19 @@ document.addEventListener("click", function(e) {
   }
 });
 
+
+function getAllCurrency(){
+  var allCurrency = ""
+  for(var i = 0; i < Currency.length; i++){
+    if(allCurrency == ""){
+      allCurrency = allCurrency + Currency[i].name;
+    }else{
+      allCurrency = allCurrency + ", " + Currency[i].name;
+    }
+  }
+  return allCurrency;
+}
+
 var makeTitle = function(){
   let gettingItem = browser.storage.local.get();
   gettingItem.then(onGot, onError);    
@@ -150,7 +164,7 @@ function onGot(item){
     if(item.base_curr.name && item.convert_curr.name){
       user_base = item.base_curr.name;
       user_convert = item.convert_curr.name;
-      title = "Convert from " + user_base + " to " + Currency.toString();
+      title = "Convert from " + user_base + " to " + getAllCurrency();
       var onUpdatedMenu = browser.contextMenus.update("log-selection",{
         title: title});
       onUpdatedMenu.then(onUpdated, onError);

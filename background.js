@@ -182,6 +182,8 @@ function Conversion(selection_text) {
   this.convert_curr = undefined;
   this.converted_amount = undefined;
   this.extra_msg_text = '';
+  this.convert_target_array = [];
+  this.converted_amount_array = [];
 };
 
 var current_conversion; //global object to hold conversion data
@@ -227,8 +229,9 @@ Conversion.prototype.onGotCurr = function (item) {
     return;
   }
 
-  if (item.convert_curr.name) {
-    this.convert_curr = item.convert_curr.name;
+  if (item.Currency[0].name) {
+    this.convert_curr = item.Currency[0].name;
+    this.convert_target_array = item.Currency;
   } else {
     this.extra_msg_text = "(Target currency not set, assuming MYR for target currency.)";
     this.convert_curr = default_convert_curr;
@@ -314,42 +317,50 @@ Conversion.prototype.currency_symbol_check = function () {
 }
 
 Conversion.prototype.finish_conversion = function () {
-  if (this.base_curr === "EUR" || this.convert_curr === "EUR") {
-    if (this.base_curr === "EUR") {
-      var convert_rate;
-      for (var n = 0; n < dailyDataArray.length; n++) {
-        if (this.convert_curr === dailyDataArray[n][0]) {
-          convert_rate = dailyDataArray[n][1];
-          this.converted_amount = this.amount * convert_rate;
-          this.converted_amount = Math.round(this.converted_amount * 100) / 100;
+  for(var i = 0; i < this.convert_target_array.length; i++) {
+    this.convert_curr = this.convert_target_array[i].name;
+    if (this.base_curr === "EUR" || this.convert_curr === "EUR") {
+      if (this.base_curr === "EUR") {
+        var convert_rate;
+        for (var n = 0; n < dailyDataArray.length; n++) {
+          if (this.convert_curr === dailyDataArray[n][0]) {
+            convert_rate = dailyDataArray[n][1];
+            this.converted_amount = this.amount * convert_rate;
+            this.converted_amount = Math.round(this.converted_amount * 100) / 100;
+          }
         }
+        onAddVal(this.base_curr, this.convert_curr, this.user_amount, this.converted_amount.toFixed(2));
+        console.log(convert_rate);
       }
-      onAddVal(this.base_curr, this.convert_curr, this.user_amount, this.converted_amount.toFixed(2));
-      console.log(convert_rate);
-    }
-    if (this.convert_curr === "EUR") {
-      var convert_rate;
-      for (var n = 0; n < dailyDataArray.length; n++) {
-        if (this.base_curr === dailyDataArray[n][0]) {
-          convert_rate = dailyDataArray[n][1];
-          this.converted_amount = this.amount / convert_rate;
-          this.converted_amount = Math.round(this.converted_amount * 100) / 100;
+      if (this.convert_curr === "EUR") {
+        var convert_rate;
+        for (var n = 0; n < dailyDataArray.length; n++) {
+          if (this.base_curr === dailyDataArray[n][0]) {
+            convert_rate = dailyDataArray[n][1];
+            this.converted_amount = this.amount / convert_rate;
+            this.converted_amount = Math.round(this.converted_amount * 100) / 100;
+          }
         }
+        onAddVal(this.base_curr, this.convert_curr, this.user_amount, this.converted_amount.toFixed(2));
       }
-      onAddVal(this.base_curr, this.convert_curr, this.user_amount, this.converted_amount.toFixed(2));
+    } else {
+      if (this.base_curr && this.convert_curr) {
+        fx.rates = dailyData.rates;
+        var rate = fx(this.amount).from(this.base_curr).to(this.convert_curr);
+        this.converted_amount = rate.toFixed(2);
+        onAddVal(this.base_curr, this.convert_curr, this.user_amount, rate.toFixed(2));
+      }
     }
-  } else {
-    if (this.base_curr && this.convert_curr) {
-      fx.rates = dailyData.rates;
-      var rate = fx(this.amount).from(this.base_curr).to(this.convert_curr);
-      this.converted_amount = rate.toFixed(2);
-      onAddVal(this.base_curr, this.convert_curr, this.user_amount, rate.toFixed(2));
-    }
+    this.converted_amount_array.push(this.converted_amount)
   }
   console.log(this);
+  var message_string = ""
+  for(var i = 0; i < this.converted_amount_array.length; i++){
+    message_string = message_string + this.base_curr + " " + this.amount + " = " + this.convert_target_array[i].name + " " + this.converted_amount_array[i] +
+        "\n"
+  }
   show_browser_notification({
-    "message": this.base_curr + " " + this.amount + " = " + this.convert_curr + " " + this.converted_amount +
-      "\n" + this.extra_msg_text
+    "message": message_string
   });
 }
 
