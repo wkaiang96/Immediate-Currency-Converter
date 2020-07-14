@@ -1,6 +1,8 @@
 var user_base = '';
 var user_convert = '';
 var advance = false;
+var convertCurrency= [];
+var Currency= [];
 
 document.addEventListener("click", function(e) {
   console.log('click');
@@ -39,15 +41,21 @@ document.addEventListener("click", function(e) {
     }, onError);
   }
 
-  function uncheckLastConvertSelection(item){
-    const btns = document.querySelectorAll('button.btn-mini');
-
-    for (const b of btns) {
-      if (b.id.indexOf('c_') > -1) {
-        b.classList.remove('btn-positive');
-        b.classList.add('btn-default');
-      }
-    }
+  function uncheckLastConvertSelection(item,i){
+    // const btns = document.querySelectorAll('button.btn-mini');
+    // console.log(item);
+    //var n = Currency.indexOf(i);
+    //Currency.splice(n, 1);
+    console.log("Hi"+Currency);
+    document.getElementById('convert_curr').innerText = getAllCurrency();
+    document.getElementById(item).classList.remove('btn-positive');
+    document.getElementById(item).classList.add('btn-default');
+    // for (const b of btns) {
+    //   if (b.id.indexOf('c_') > -1) {
+    //     b.classList.remove('btn-positive');
+    //     b.classList.add('btn-default');
+    //   }
+    // }
   }
 
   function checkNewConvertSelection(selection){
@@ -56,11 +64,12 @@ document.addEventListener("click", function(e) {
     base_selection.classList.remove('btn-default');
     base_selection.classList.add('btn-positive');
 
-    let result = browser.storage.local.set({convert_curr});
+    let result = browser.storage.local.set({Currency});
     result.then(function() {
-      document.getElementById('convert_curr').innerText = convert_curr.name;
+      document.getElementById('convert_curr').innerText = getAllCurrency();
     }, onError);
   }
+
 
   if (e.target.id === "browser-update-minimize") {
     getCurrentbrowser().then((currentbrowser) => {
@@ -80,11 +89,28 @@ document.addEventListener("click", function(e) {
     makeTitle();
   }
   else if(e.target.id.startsWith("c_")) {
-    uncheckLastConvertSelection(user_convert);
+    //uncheckLastConvertSelection(user_convert);
     // extract the part of the id after "c_"
     convert_curr.name = e.target.id.slice(2);
-    // console.log('convert curr selected', convert_curr);
-    checkNewConvertSelection(convert_curr);
+     //console.log('convert curr selected', convert_curr);
+    if (convertCurrency.includes("c_"+convert_curr.name)){
+      var num = convertCurrency.indexOf("c_"+convert_curr.name);
+      convertCurrency.splice(num, 1);
+
+      var num1 = Currency.indexOf(convert_curr.name);
+      Currency.splice(num1, 1);
+      //console.log(convertCurrency);
+      //console.log(Currency);
+      uncheckLastConvertSelection("c_"+convert_curr.name);
+    }
+    else if (!convertCurrency.includes("c_"+convert_curr.name)){
+      convertCurrency.push("c_"+convert_curr.name);
+      Currency.push(convert_curr);
+      //console.log(convertCurrency);
+      //console.log(Currency);
+      checkNewConvertSelection(convert_curr);
+    }
+
     makeTitle();
   } 
   else if (e.target.id == 'advanceChk') {
@@ -113,6 +139,19 @@ document.addEventListener("click", function(e) {
   }
 });
 
+
+function getAllCurrency(){
+  var allCurrency = ""
+  for(var i = 0; i < Currency.length; i++){
+    if(allCurrency == ""){
+      allCurrency = allCurrency + Currency[i].name;
+    }else{
+      allCurrency = allCurrency + ", " + Currency[i].name;
+    }
+  }
+  return allCurrency;
+}
+
 var makeTitle = function(){
   let gettingItem = browser.storage.local.get();
   gettingItem.then(onGot, onError);    
@@ -125,7 +164,7 @@ function onGot(item){
     if(item.base_curr.name && item.convert_curr.name){
       user_base = item.base_curr.name;
       user_convert = item.convert_curr.name;
-      title = "Convert from " + user_base + " to " + user_convert;
+      title = "Convert from " + user_base + " to " + getAllCurrency();
       var onUpdatedMenu = browser.contextMenus.update("log-selection",{
         title: title});
       onUpdatedMenu.then(onUpdated, onError);
