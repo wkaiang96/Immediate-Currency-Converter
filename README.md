@@ -36,4 +36,6 @@ one application that store historical currency rate and live rates? Hmm... still
 * Allow numbers in European/alternative format, for eg., 1.000.000,00 is accepted and treated as 1 million. (Note however that this happens only when there are at least two dots in the number. 25.000 is treated as 25, not as 25000.)
 
 
-
+### Update 0.4
+* Allow users to select multiple Convert Currency, then it will display the converion at pop-up
+* When users select multiple Convert Currency then those selected currency's buttons will be highlighted 
